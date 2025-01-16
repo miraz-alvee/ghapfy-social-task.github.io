@@ -17,6 +17,9 @@ export class PostService {
 
   async createPost(createPostDto: CreatePostDto, user: UserEntity){
     const post = this.postRepository.create({ ...createPostDto, user});
+    if (!post) {
+      throw new UnauthorizedException('You are not authorized to create this post');
+    }
     return await this.postRepository.save(post);
   }
 

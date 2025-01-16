@@ -1,5 +1,6 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { error } from 'console';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -13,25 +14,23 @@ export class AuthGuard implements CanActivate {
         const Header = request.headers.authorization?.replace('Bearer ', '');
 
         if (!Header) {
-            return false;
+            throw new UnauthorizedException('You Must Login!');
         }
 
         const requestedUserId = parseInt(request.params.id, 10);
 
         try {
-            //const token = Header.split(' ')[1];
-            //console.log("success");
             const decoded = this.jwtService.verify(Header);
             request.user = decoded;
 
             if (requestedUserId && parseInt(decoded.userId, 10) !== requestedUserId) {
-                return false;
+                throw new UnauthorizedException('You are not authorized to access this resource');
             }
 
             return true;
         }
         catch (error) {
-            return false;
+            throw new UnauthorizedException('Invalid or Expired token,You Must Login!');
         }
     }
 }

@@ -15,7 +15,7 @@ export class PostController {
   async createPost(@Body() createPostDto: CreatePostDto, @Request() req) {
     return await this.postService.createPost(createPostDto, req.currentUser);
   }
-
+  @UseGuards(AuthGuard)
   @Get()
   async getAllPost(@Query() query: QueryPostDto): Promise<{
     data: PostEntity[];
