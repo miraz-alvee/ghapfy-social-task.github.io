@@ -22,6 +22,10 @@ import { PostEntity } from './post/entities/post.entity';
         database: configService.get('DB_DATABASE'),
         entities: [UserEntity, PostEntity],
         synchronize: true,
+        ssl: {
+          //set this to true in production with proper certificates
+          rejectUnauthorized: false, 
+        },
       }),
       inject: [ConfigService],
     }), UserModule, PostModule],
