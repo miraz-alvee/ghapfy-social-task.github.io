@@ -34,7 +34,7 @@ export class PostService {
       startDate,
       endDate,
       sortBy = 'createdAt',
-      sortOrder = 'DESC',
+      sortOrder = 'ASC',
       limit = '10',
       page = '1',
     } = query;

@@ -8,13 +8,15 @@ import { QueryPostDto } from './dto/query-post.dto';
 
 @Controller('posts')
 export class PostController {
-  constructor(private readonly postService: PostService) {}
+  constructor(private readonly postService: PostService) { }
 
   @UseGuards(AuthGuard)
   @Post()
   async createPost(@Body() createPostDto: CreatePostDto, @Request() req) {
     return await this.postService.createPost(createPostDto, req.currentUser);
   }
+
+
   @UseGuards(AuthGuard)
   @Get()
   async getAllPost(@Query() query: QueryPostDto): Promise<{
@@ -26,19 +28,42 @@ export class PostController {
     return await this.postService.getAllPost(query);
   }
 
+
+  //@UseGuards(AuthGuard)
   @Get(':id')
-  getOnePost(@Param('id') id: number) {
-    return this.postService.findOne(id);
+  async getOnePost(@Param('id') id: number): Promise<{
+    message: string;
+    data: PostEntity;
+  }> {
+    const singlePost = await this.postService.findOne(id);
+    console.log(singlePost);
+    return {
+      message: "get single Successfully!",
+      data: singlePost
+    }
   }
 
+
   @Patch(':id')
-  async updatePost(@Param('id') id: number, @Body() updatePostDto: UpdatePostDto, @Request() req): Promise<PostEntity>{
-    return await this.postService.updatePost(id, updatePostDto, req.currentUser);
+  async updatePost(@Param('id') id: number, @Body() updatePostDto: UpdatePostDto, @Request() req): Promise<{ message: string, data: PostEntity }> {
+
+    const updatePost = await this.postService.updatePost(id, updatePostDto, req.currentUser);
+    return {
+      message: "Post updated Successfully!",
+      data: updatePost
+    }
   }
 
   @Delete(':id')
-  async deletePost(@Param('id') id: number, @Request() req) {
-    return await this.postService.deletePost(id, req.currentUser);
+  async deletePost(@Param('id') id: number, @Request() req): Promise<{
+    message: string;
+    deletePost: void;
+  }> {
+    const deletePost = await this.postService.deletePost(id, req.currentUser);
+    return {
+      message: 'Post deleted successfully!',
+      deletePost
+    };
   }
- 
+
 }

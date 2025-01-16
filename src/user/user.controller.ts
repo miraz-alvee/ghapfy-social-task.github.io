@@ -17,18 +17,41 @@ import { LoginUserDto } from './dto/login-user.dto';
 
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Post('signup')
   @UsePipes(ValidationPipe)
-  async signup(@Body() createUserDto: CreateUserDto): Promise<UserEntity> {
-    return await this.userService.signup(createUserDto);
+  async signup(@Body() createUserDto: CreateUserDto): Promise<{ message: string, user: UserEntity }> {
+    const user = await this.userService.signup(createUserDto);
+    return {
+      message: 'user Signup Successfully !',
+      user: user
+    };
   }
 
+  // @Post('login')
+  // async login(@Body() loginUserDto: LoginUserDto){
+  //   return await this.userService.login(loginUserDto)
+  // }
+
   @Post('login')
-  async login(@Body() loginUserDto: LoginUserDto){
-    return await this.userService.login(loginUserDto)
+  async login(@Body() loginUserDto: LoginUserDto): Promise<{
+    message: string;
+    data: {
+      accessToken: {
+        token: string;
+      };
+    };
+  }> {
+    const result = await this.userService.login(loginUserDto);
+    return {
+      message: 'User Login Successfully!',
+      data: {
+        accessToken: result,
+      },
+    };
   }
+
 
   @Get()
   async findAll() {
