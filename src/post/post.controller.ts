@@ -16,7 +16,6 @@ export class PostController {
     return await this.postService.createPost(createPostDto, req.currentUser);
   }
 
-
   @UseGuards(AuthGuard)
   @Get()
   async getAllPost(@Query() query: QueryPostDto): Promise<{

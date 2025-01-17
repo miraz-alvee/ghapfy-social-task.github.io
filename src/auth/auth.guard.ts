@@ -11,6 +11,7 @@ export class AuthGuard implements CanActivate {
     ): boolean | Promise<boolean> | Observable<boolean> {
         const request = context.switchToHttp().getRequest();
         const Header = request.headers.authorization?.replace('Bearer ', '');
+        console.log(Header);
 
         if (!Header) {
             throw new UnauthorizedException('You Must Login!');
@@ -20,6 +21,8 @@ export class AuthGuard implements CanActivate {
 
         try {
             const decoded = this.jwtService.verify(Header);
+           
+            console.log('Decoded Token:', decoded);
             request.user = decoded;
 
             if (requestedUserId && parseInt(decoded.userId, 10) !== requestedUserId) {
@@ -29,7 +32,8 @@ export class AuthGuard implements CanActivate {
             return true;
         }
         catch (error) {
-            throw new UnauthorizedException('Invalid or Expired token,You Must Login!');
+            console.error('Token verification failed:', error);
+            throw new UnauthorizedException('Invalid or expired token. You must login!');
         }
     }
 }

@@ -44,6 +44,7 @@ export class UserController {
     };
   }> {
     const result = await this.userService.login(loginUserDto);
+    console.log(result);
     return {
       message: 'User Login Successfully!',
       data: {

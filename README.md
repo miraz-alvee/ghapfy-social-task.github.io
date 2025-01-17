@@ -27,9 +27,12 @@
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Project setup
+Create a .env file in the root directory:
+
+## Clone the Reposity
 ```bash
-clone the reposity : git clone [this repository]
-cd [project name]
+$ git clone [this repository]
+$ cd [project name]
 ```
 ```bash
 $ npm install
@@ -48,17 +51,17 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Run tests
+## Create a .env file in the root directory:
 
 ```bash
-# unit tests
-$ npm run test
+DB_HOST=your-database-host.render.com
+DB_PORT=5432
+DB_USERNAME=your-username
+DB_PASSWORD=your-password
+DB_DATABASE=your-database
+JWT_SECRET=your-secret-key
+PORT=3000
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
 ## Deployment
