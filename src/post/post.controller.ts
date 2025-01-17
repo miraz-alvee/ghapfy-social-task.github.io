@@ -28,7 +28,7 @@ export class PostController {
   }
 
 
-  @UseGuards(AuthGuard)
+  //@UseGuards(AuthGuard)
   @Get(':id')
   async getOnePost(@Param('id') id: number): Promise<{
     message: string;
@@ -42,7 +42,7 @@ export class PostController {
     }
   }
 
-  @UseGuards(AuthGuard)
+  //@UseGuards(AuthGuard)
   @Patch(':id')
   async updatePost(@Param('id') id: number, @Body() updatePostDto: UpdatePostDto, @Request() req): Promise<{ message: string, data: PostEntity }> {
 
@@ -53,7 +53,7 @@ export class PostController {
     }
   }
 
-  @UseGuards(AuthGuard)
+  //@UseGuards(AuthGuard)
   @Delete(':id')
   async deletePost(@Param('id') id: number, @Request() req): Promise<{
     message: string;
