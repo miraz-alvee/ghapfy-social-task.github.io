@@ -67,10 +67,10 @@ PORT=3000
 
 | Method | Endpoint       | Description               |
 |--------|----------------|---------------------------|
-| GET    | `/users/:id`   | Get user by ID            |
-| POST   | `/users/login`  | Login and get a JWT       |
-| POST   | `/users/signup`  | Signup      |
-| DELETE | `/posts/:id`   | Delete a specific post    |
+| GET    | `api/v1/users/:id`   | Get user by ID            |
+| POST   | `api/v1/users/login`  | Login and get a JWT       |
+| POST   | `api/v1/users/signup`  | Signup      |
+| DELETE | `api/v1/posts/:id`   | Delete a specific post    |
 
 
 
